@@ -41,4 +41,7 @@ def encode_string(x):
 
 
 def decode_string(x):
-    return x.decode('utf-8')
+    try:
+        return x.decode('utf-8')
+    except UnicodeDecodeError:
+        return x.decode('latin-1')
