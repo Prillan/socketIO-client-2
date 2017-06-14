@@ -163,7 +163,10 @@ class WebsocketTransport(AbstractTransport):
         except socket.error as e:
             raise ConnectionError('recv disconnected (%s)' % e)
         if not isinstance(packet_text, six.binary_type):
-            packet_text = six.b(packet_text)
+            try:
+                packet_text = six.b(packet_text)
+            except UnicodeDecodeError:
+                packet_text = packet_text.encode('utf-8')
         engineIO_packet_type, engineIO_packet_data = parse_packet_text(
             packet_text)
         yield engineIO_packet_type, engineIO_packet_data
