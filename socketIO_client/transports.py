@@ -165,7 +165,7 @@ class WebsocketTransport(AbstractTransport):
         if not isinstance(packet_text, six.binary_type):
             try:
                 packet_text = six.b(packet_text)
-            except UnicodeDecodeError:
+            except UnicodeEncodeError:
                 packet_text = packet_text.encode('utf-8')
         engineIO_packet_type, engineIO_packet_data = parse_packet_text(
             packet_text)
